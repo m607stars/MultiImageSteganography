@@ -38,6 +38,7 @@ we concat our representations of three images with the cover image, giving as a 
 * Representation of second secret Image (batch_size, 65, 64,64) <br>
 * Representation of third secret Image (batch_size, 65, 64,64) <br>
 <br>
+
 This tensor is passed on the hiding network which consists of five blocks of layers. Each of these layers is similar to the blocks used in the prep network. 
 The final layer of the hiding network should output a tensor of dimensions **(batch_size, 3, 64, 64)**. This is the encoded image **OR** the cover images which is used to hide our three secret images. 
 
