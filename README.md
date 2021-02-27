@@ -33,10 +33,10 @@ Note that, here our channels are 65 (Due to concatenation of 5,10 and 50 channel
 
 Next, after getting the representation for three images, we need to **hide**  these three images into our cover image. For this, we have a hiding network. First, 
 we concat our representations of three images with the cover image, giving as a tensor of dimensions **(batch_size, 198, 64,64)**. Here, the channels are 198, due to concatenation of these four tensors:<br>
-a) Cover Image (batch_size, 3, 64,64) <br>
-b) Representation of first secret Image (batch_size, 65, 64,64) <br>
-c) Representation of second secret Image (batch_size, 65, 64,64) <br>
-d) Representation of third secret Image (batch_size, 65, 64,64) <br>
+* Cover Image (batch_size, 3, 64,64) <br>
+* Representation of first secret Image (batch_size, 65, 64,64) <br>
+* Representation of second secret Image (batch_size, 65, 64,64) <br>
+* Representation of third secret Image (batch_size, 65, 64,64) <br>
 <br>
 This tensor is passed on the hiding network which consists of five blocks of layers. Each of these layers is similar to the blocks used in the prep network. 
 The final layer of the hiding network should output a tensor of dimensions **(batch_size, 3, 64, 64)**. This is the encoded image **OR** the cover images which is used to hide our three secret images. 
@@ -60,14 +60,14 @@ This script is used for creating the training and validation datasets. We sample
 
 ## Description
 
-Here, we describe the method to train the model. Initially, this seems like a standard encoder-decoder model. But, the training works in this way: 
+* Here, we describe the method to train the model. Initially, this seems like a standard encoder-decoder model. But, the training works in this way: 
 First, we train the encoder, and keep the decoder's parameters as untrainable. This helps the encoder to learn and create the encoded hidden image. This model is evaluated using the loss for all the reveal images as well as the hidden image.
 
-After getting the output from the encoder, we train the decoder (Consisting of three reveal networks). This decoder, is evaluated only on the basis of the reveal loss. 
+* After getting the output from the encoder, we train the decoder (Consisting of three reveal networks). This decoder, is evaluated only on the basis of the reveal loss. 
 
-Now, the parameters of the deocder's networks are shared with the reveal networks while the encoder is being trained.
+* Now, the parameters of the deocder's networks are shared with the reveal networks while the encoder is being trained.
 
-This ideally helps the network to learn much better as the encoder and the decoder network become smaller and task is way more focused in terms of optimization instead of training the whole model in a joint manner. 
+* This ideally helps the network to learn much better as the encoder and the decoder network become smaller and task is way more focused in terms of optimization instead of training the whole model in a joint manner. 
 
 ## Training
 
@@ -99,18 +99,18 @@ More outputs can be found at the end of our [notebook](https://github.com/m607st
 There are two different losses for the full model and the deocder.
 
 The full model loss is calculated by summation of MSE of the following pairs: <br>
-a) Cover Image, Hidden Image<br>
-b) Secret Image 1, Reveal Image 1<br>
-c) Secret Image 2, Reveal Image 2<br>
-d) Secret Image 3, Reveal Image 3<br>
+* Cover Image, Hidden Image<br>
+* Secret Image 1, Reveal Image 1<br>
+* Secret Image 2, Reveal Image 2<br>
+* Secret Image 3, Reveal Image 3<br>
 
 We weight the losses of cover image and secret images to 1:1.
 
 For the decoder network, the reveal loss is summation of MSE of the following pairs:<br>
 
-a) Secret Image 1, Reveal Image 1<br>
-b) Secret Image 2, Reveal Image 2<br>
-c) Secret Image 3, Reveal Image 3<br>
+* Secret Image 1, Reveal Image 1<br>
+* Secret Image 2, Reveal Image 2<br>
+* Secret Image 3, Reveal Image 3<br>
 
 Here is our loss for full model and decoder loss
 
@@ -126,9 +126,9 @@ Here is our loss for full model and decoder loss
 
 ## Remarks
 
-1) We could not use the validation set due to limitations of the GPU. 
-2) In the author's implementation, for each block, they have used a kernel size of 4 for the second layer. But we have kept it 3.
-3) We have not added gaussian noise to the encoder's output. 
+* We could not use the validation set due to limitations of the GPU. 
+* In the author's implementation, for each block, they have used a kernel size of 4 for the second layer. But we have kept it 3.
+* We have not added gaussian noise to the encoder's output. 
 
 ## Model checkpoint
 
