@@ -17,13 +17,13 @@ Here are some examples of object detection in images not seen during training â€
 The model architecture consists of two parts -> Encoder and Decoder 
 
 <p align="center">
-<img src="./assets/model_architecture.jpg">
+<img src="https://github.com/m607stars/MultiImageSteganography/blob/master/assets/model_architecture.png">
 </p>
 
 ## Encoder
 
 <p align="center">
-<img src="./assets/hidden_image.jpg">
+<img src="https://github.com/m607stars/MultiImageSteganography/blob/master/assets/hidden_image.png">
 </p>
 
 
@@ -45,7 +45,7 @@ The final layer of the hiding network should output a tensor of dimensions **(ba
 
 
 <p align="center">
-<img src="./assets/reveal_image.jpg">
+<img src="https://github.com/m607stars/MultiImageSteganography/blob/master/assets/reveal_image.png">
 </p>
 
 Decoder is used to reveal the secret image from the encoded cover image. It consists of the three reveal networks for each of the three secret images. Each of the reveal networks consists of five blocks of convolutional layers. The underlying architecture of each block is the same as in the encoder. Since the output of each bock is an image of dimension  **(batch_size,65,64,64)**, we need to change the number of channels to 3 for an RGB image. So, we apply another conv2D layer at the end of each of the reveal networks to get the image of dimesion **(batch_size, 3, 64, 64)**. This is achieved by setting the output channels as 3 in this last conv2D layer. This final image is the decoded secret image obtained from the reveal networks. Thus we get three decoded secret images from each of the three reveal networks.
@@ -89,7 +89,7 @@ DECODER_LOSS_WEIGHT = 1
 Here is a sample output from our testing dataset:
 
 <p align="center">
-<img src="./assets/outputs.jpg">
+<img src="https://github.com/m607stars/MultiImageSteganography/blob/master/assets/outputs.png">
 </p>
 
 More outputs can be found at the end of our [notebook](https://github.com/m607stars/MultiImageSteganography/blob/master/MultiImageSteganography.ipynb)
@@ -112,9 +112,21 @@ a) Secret Image 1, Reveal Image 1<br>
 b) Secret Image 2, Reveal Image 2<br>
 c) Secret Image 3, Reveal Image 3<br>
 
+Here is our loss for full model and decoder loss
+
+<p align="center">
+<img src="https://github.com/m607stars/MultiImageSteganography/blob/master/assets/full_model_loss.png">
+</p>
+
+<p align="center">
+<img src="https://github.com/m607stars/MultiImageSteganography/blob/master/assets/decoder_loss.png">
+</p>
+
+
+
 ## Remarks
 
-1) we could not use the validation set due to limitations of the GPU. 
+1) We could not use the validation set due to limitations of the GPU. 
 2) In the author's implementation, for each block, they have used a kernel size of 4 for the second layer. But we have kept it 3.
 3) We have not added gaussian noise to the encoder's output. 
 
